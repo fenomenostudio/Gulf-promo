@@ -1,0 +1,54 @@
+/* ============================================================================
+   Gulf — "Gana con Gulf" | CSS de marca para Tally (Code injection, Pro)
+   ----------------------------------------------------------------------------
+   Pegar en: Tally → Form settings → Code injection → CSS.
+   Ajustar los HEX contra el manual de marca oficial de Gulf (ver ../brand/brand.md).
+   Tally puede cambiar sus clases internas; si algo deja de aplicar, revisar con el
+   inspector del navegador y actualizar los selectores.
+   ============================================================================ */
+
+:root {
+  --gulf-navy: #002F6C;
+  --gulf-orange: #F58220;
+  --gulf-orange-hover: #d96f16;
+  --gulf-text: #0D1B2A;
+}
+
+/* Color de acento / texto general */
+.tally-form,
+.tally-form * {
+  color: var(--gulf-text);
+}
+
+/* Botón de envío -> naranja Gulf */
+button[type="submit"],
+.tally-form button[data-variant="primary"] {
+  background-color: var(--gulf-orange) !important;
+  border-color: var(--gulf-orange) !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+button[type="submit"]:hover {
+  background-color: var(--gulf-orange-hover) !important;
+}
+
+/* Foco de inputs con acento de marca */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gulf-navy) !important;
+  box-shadow: 0 0 0 2px rgba(0, 47, 108, .15) !important;
+}
+
+/* Checkboxes / radios marcados en naranja */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  accent-color: var(--gulf-orange);
+}
+
+/* Titulos del formulario en navy */
+h1, h2, h3 {
+  color: var(--gulf-navy) !important;
+}
