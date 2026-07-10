@@ -8,10 +8,10 @@
    ============================================================================ */
 
 :root {
-  --gulf-navy: #002F6C;
-  --gulf-orange: #F58220;
-  --gulf-orange-hover: #d96f16;
-  --gulf-text: #0D1B2A;
+  --gulf-navy: #002776;        /* Gulf Dark Blue, Pantone 280 C */
+  --gulf-orange: #FF6319;      /* Gulf Orange, Pantone 165 C */
+  --gulf-orange-hover: #E5551A;
+  --gulf-text: #002776;
 }
 
 /* Color de acento / texto general */

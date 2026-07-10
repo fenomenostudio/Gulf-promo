@@ -125,12 +125,12 @@ formulario con candado SSL y sin sello Tally.
 
 ## FASE 5 — Conectar Google Sheets ⚪ 🟢(hoja creada)
 
-> **Hoja ya creada** en el Drive del proyecto: **"Gulf Motopóker — Respuestas"**
+> **Hoja ya creada** en el Drive del proyecto: **"Gana con Gulf — Respuestas"**
 > con las columnas que calzan al formulario del cliente (ver `tally/form-spec.md`).
 
 1. En el formulario Tally → **Integrations → Google Sheets → Connect**.
 2. Autorizar con la **cuenta Google dueña de la base** (`hola@fenomenostudio.com`).
-3. Apuntar a la hoja existente **"Gulf Motopóker — Respuestas"** (o dejar que Tally
+3. Apuntar a la hoja existente **"Gana con Gulf — Respuestas"** (o dejar que Tally
    cree una nueva si se prefiere que la gestione él).
 4. Mapear cada campo del formulario a una columna.
 5. Hacer un envío de prueba → confirmar que la fila aparece en la hoja.

@@ -1,8 +1,8 @@
-# Especificación del formulario — Gulf (promo "Motopóker")
+# Especificación del formulario — "Gana con Gulf"
 
-> Basado en el formulario **original del cliente** ("GULF- Motopocker", Google Forms).
-> Creamos uno **nuevo** en Tally (branded) replicando estos campos — no se toca el del cliente.
-> Fuente: https://forms.gle/GBq7F7KorrqSEjZF6
+> Basado en el formulario **original del cliente** (Google Forms). Creamos uno
+> **nuevo** en Tally (branded) replicando estos campos — no se toca el del cliente.
+> Nombre de la promo: **Gana con Gulf**. Fuente: https://forms.gle/GBq7F7KorrqSEjZF6
 
 ## Campos (los 6 del cliente)
 
@@ -33,7 +33,7 @@
 - Branding (logo, colores, CSS) → ver `../brand/brand.md` y `custom-css.css`.
 
 ## Integración
-- **Google Sheets** (nativa): hoja **"Gulf Motopóker — Respuestas"** con columnas
+- **Google Sheets** (nativa): hoja **"Gana con Gulf — Respuestas"** con columnas
   que calzan a estos campos. Ver Fase 5 del RUNBOOK.
 - Tally agrega **timestamp** automático por envío.
 

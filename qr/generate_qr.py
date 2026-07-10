@@ -18,7 +18,7 @@ import segno
 
 # --- Configuracion -----------------------------------------------------------
 URL = "https://ganacongulf.com"      # destino final del QR (dominio propio Tally)
-NAVY = "#002F6C"                      # navy Gulf (confirmar contra manual de marca)
+NAVY = "#002776"                      # Gulf Dark Blue oficial (Pantone 280 C, brand book)
 LIGHT = "#FFFFFF"                     # fondo
 
 # --- Generacion --------------------------------------------------------------
