@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .banner {
+    width: 1920px; height: 640px;
+    position: relative; overflow: hidden;
+    background: #FFFFFF;
+  }
+  .stripes {
+    position: absolute; top: -200px; right: -320px;
+    width: 1000px; height: 1100px;
+    transform: rotate(24deg);
+    display: flex;
+  }
+  .s-light { width: 250px; height: 100%; background: #B9D9EB; }
+  .s-orange { width: 120px; height: 100%; background: #FF6319; }
+  .s-blue { width: 300px; height: 100%; background: #002776; }
+
+  .content {
+    position: absolute; left: 110px; top: 50%;
+    transform: translateY(-50%); z-index: 2;
+  }
+  .headline {
+    display: flex; align-items: center; gap: 40px;
+  }
+  .headline .txt {
+    color: #002776; font-size: 140px; font-weight: 800;
+    letter-spacing: -2px; line-height: 1;
+  }
+  .headline img { height: 240px; width: auto; display:block; }
+
+  .ig {
+    margin-top: 44px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .ig svg { width: 52px; height: 52px; }
+  .ig .handle {
+    color: #002776; font-size: 46px; font-weight: 700;
+    letter-spacing: .3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="banner" id="v2">
+  <div class="stripes">
+    <div class="s-light"></div>
+    <div class="s-orange"></div>
+    <div class="s-blue"></div>
+  </div>
+  <div class="content">
+    <div class="headline">
+      <div class="txt">Gana con</div>
+      <img src="gulf-logo-disc.png" alt="Gulf">
+    </div>
+    <div class="ig">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#002776" stroke-width="1.8">
+        <rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/>
+        <circle cx="12" cy="12" r="4.6"/>
+        <circle cx="17.6" cy="6.4" r="1.3" fill="#002776" stroke="none"/>
+      </svg>
+      <div class="handle">@gulfoilguatemala</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -123,6 +123,35 @@ formulario con candado SSL y sin sello Tally.
 
 ---
 
+## FASE 4b (opcional) — Redirect temporal mientras no hay Pro ⚪
+
+Para que `ganacongulf.com` funcione YA (demos internas) antes de activar Tally Pro:
+redirigirlo temporalmente al form de Tally con una Redirect Rule de Cloudflare (gratis).
+
+1. Cloudflare → zona `ganacongulf.com` → **DNS → Records → Add record**:
+   - Type `A` · Name `@` · IPv4 `192.0.2.1` · **Proxy ON (nube naranja)**
+   - Type `CNAME` · Name `www` · Target `ganacongulf.com` · **Proxy ON**
+   - (La IP es un placeholder; solo existe para que el proxy de Cloudflare responda.)
+2. Cloudflare → **Rules → Redirect Rules → Create rule**:
+   - Nombre: `Temp redirect a Tally`
+   - When: **Wildcard pattern** → Request URL: `https://*ganacongulf.com/*`
+   - Then: **Static redirect** → URL: `https://tally.so/r/NpQpVB` · Status: **302**
+3. Probar en el navegador: `ganacongulf.com` → debe abrir el form de Tally.
+
+**⚠️ Al activar Pro (Fase 4 real): DESHACER esto** — borrar la Redirect Rule y los
+2 registros dummy, y recién entonces crear los registros que Tally indique (en
+**DNS only / nube gris**, no naranja). Si se dejan mezclados, el dominio no valida.
+
+## ⚠️ Nota de configuración — "Close form" vs "Thank you page"
+
+- **Thank you page** (editor, bloque `/thank` al final): lo que ve quien ENVIÓ su
+  respuesta. Aquí va "🎉 ¡Gracias por participar!".
+- **Closed form message** (Settings → Access): lo que ve la gente cuando el form está
+  CERRADO (toggle "Close form" o cierre programado). Usarlo solo al FINALIZAR la promo
+  ("La promoción ha finalizado"). **Nunca dejar "Close form" activado durante la promo.**
+- Tip: "Close form on a scheduled date" sirve para cerrar la promo automáticamente
+  en su fecha de fin.
+
 ## FASE 5 — Conectar Google Sheets ⚪ 🟢(hoja creada)
 
 > **Hoja ya creada** en el Drive del proyecto: **"Gana con Gulf — Respuestas"**
