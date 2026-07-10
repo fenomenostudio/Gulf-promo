@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .banner {
+    width: 1920px; height: 640px;
+    position: relative; overflow: hidden;
+  }
+  /* ============ VARIANTE A: sobre Gulf Dark Blue ============ */
+  .A { background: #002776; }
+  /* franjas racing diagonales */
+  .A .stripes {
+    position: absolute; top: -200px; right: -320px;
+    width: 1000px; height: 1100px;
+    transform: rotate(24deg);
+    display: flex;
+  }
+  .A .s-light { width: 340px; height: 100%; background: #B9D9EB; }
+  .A .s-orange { width: 130px; height: 100%; background: #FF6319; }
+  .A .content {
+    position: absolute; left: 110px; top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+  .A h1 {
+    color: #FFFFFF; font-size: 128px; font-weight: 800;
+    letter-spacing: -2px; line-height: 1.02;
+  }
+  .A h1 .gulf { color: #FF6319; }
+  .A .claim {
+    margin-top: 28px; color: #B9D9EB;
+    font-size: 44px; font-weight: 500; letter-spacing: .5px;
+  }
+  .A .url {
+    margin-top: 34px; display: inline-block;
+    background: #FF6319; color: #fff;
+    font-size: 34px; font-weight: 700;
+    padding: 14px 34px; border-radius: 12px;
+    letter-spacing: .5px;
+  }
+
+  /* ============ VARIANTE B: sobre White ============ */
+  .B { background: #FFFFFF; }
+  .B .stripes {
+    position: absolute; top: -200px; right: -320px;
+    width: 1000px; height: 1100px;
+    transform: rotate(24deg);
+    display: flex;
+  }
+  .B .s-blue { width: 300px; height: 100%; background: #002776; }
+  .B .s-light { width: 250px; height: 100%; background: #B9D9EB; }
+  .B .s-orange { width: 120px; height: 100%; background: #FF6319; }
+  .B .content {
+    position: absolute; left: 110px; top: 50%;
+    transform: translateY(-50%); z-index: 2;
+  }
+  .B h1 {
+    color: #002776; font-size: 128px; font-weight: 800;
+    letter-spacing: -2px; line-height: 1.02;
+  }
+  .B h1 .gulf { color: #FF6319; }
+  .B .claim {
+    margin-top: 28px; color: #002776;
+    font-size: 44px; font-weight: 500;
+  }
+  .B .url {
+    margin-top: 34px; display: inline-block;
+    background: #002776; color: #fff;
+    font-size: 34px; font-weight: 700;
+    padding: 14px 34px; border-radius: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="banner A" id="varA">
+  <div class="stripes">
+    <div class="s-light"></div>
+    <div class="s-orange"></div>
+    <div class="s-light" style="width:120px"></div>
+  </div>
+  <div class="content">
+    <h1>Gana con <span class="gulf">Gulf</span></h1>
+    <div class="claim">Escanea &middot; Participa &middot; Gana</div>
+    <div class="url">ganacongulf.com</div>
+  </div>
+</div>
+
+<div class="banner B" id="varB">
+  <div class="stripes">
+    <div class="s-light"></div>
+    <div class="s-orange"></div>
+    <div class="s-blue"></div>
+  </div>
+  <div class="content">
+    <h1>Gana con <span class="gulf">Gulf</span></h1>
+    <div class="claim">Escanea &middot; Participa &middot; Gana</div>
+    <div class="url">ganacongulf.com</div>
+  </div>
+</div>
+
+</body>
+</html>

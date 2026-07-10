@@ -6,10 +6,15 @@ QR de la promo, apunta a **`https://ganacongulf.com`** (verificado por decodific
 
 | Archivo | Uso |
 |---|---|
-| `ganacongulf-qr.svg` | **Imprenta / diseño.** Vector, escala infinita sin pixelarse. |
-| `ganacongulf-qr.png` | Digital / preview alta resolución (~890 px). |
+| `ganacongulf-qr-logo.png` | **QR con el logo Gulf al centro** (1480 px). Verificado que escanea incluso reducido a 300 px. |
+| `ganacongulf-qr.svg` | Versión sin logo. **Imprenta / diseño.** Vector, escala infinita. |
+| `ganacongulf-qr.png` | Versión sin logo, alta resolución. |
 | `ganacongulf-qr-mini.png` | Control visual pequeño. |
 | `generate_qr.py` | Script para regenerar (cambiar `URL` si cambia el destino). |
+
+> El logo central cubre ~6% del área (corrección de error H tolera hasta 30%),
+> así que el margen de lectura sigue siendo amplio. Aun así, probar el escaneo
+> en el material impreso final antes del tiraje.
 
 ## Especificaciones técnicas
 
