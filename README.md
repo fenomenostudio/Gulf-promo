@@ -57,7 +57,8 @@ caen en **Google Sheets**.
 - [ ] Cuenta Tally + Pro (requiere cuenta/pago — agencia)
 - [ ] Formulario construido en Tally
 - [ ] Dominio conectado a Tally (DNS)
-- [x] Google Sheet de respuestas creada ("Gana con Gulf — Respuestas", campos base)
+- [x] Google Sheet de respuestas creada ("Gulf Motopóker — Respuestas", campos del cliente)
+- [x] Formulario del cliente mapeado a spec de Tally
 - [ ] Google Sheets conectado a Tally
 - [ ] Prueba end-to-end
 

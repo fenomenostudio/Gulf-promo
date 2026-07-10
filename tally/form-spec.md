@@ -1,44 +1,42 @@
-# Especificación del formulario — "Gana con Gulf"
+# Especificación del formulario — Gulf (promo "Motopóker")
 
-> ⚠️ **PROPUESTA a confirmar con Gulf.** Estos campos son un punto de partida típico
-> para una promo/rifa con captura de datos en Guatemala. Ajustar según la mecánica
-> real del premio y lo que legal/marketing de Gulf requiera.
+> Basado en el formulario **original del cliente** ("GULF- Motopocker", Google Forms).
+> Creamos uno **nuevo** en Tally (branded) replicando estos campos — no se toca el del cliente.
+> Fuente: https://forms.gle/GBq7F7KorrqSEjZF6
 
-## Objetivo
-Capturar participantes de la promo de forma rápida (se llena desde el celular tras
-escanear el QR) y guardar todo en Google Sheets.
+## Campos (los 6 del cliente)
 
-## Campos propuestos
-
-| # | Campo | Tipo Tally | Requerido | Notas |
+| # | Campo (label exacto) | Tipo en Tally | Requerido | Notas |
 |---|---|---|---|---|
-| 1 | Nombre completo | Short text | Sí | — |
-| 2 | Teléfono (WhatsApp) | Phone number | Sí | Validación de formato; principal canal de contacto |
-| 3 | Correo electrónico | Email | Sí | Validación de email |
-| 4 | DPI / No. de identificación | Short text | Opcional* | *Requerido si el premio exige verificación de identidad |
-| 5 | Departamento | Dropdown | Sí | Lista de los 22 departamentos de Guatemala |
-| 6 | Estación Gulf / punto de compra | Short text o Dropdown | Opcional | Si la promo es por compra en estación |
-| 7 | No. de factura / ticket | Short text | Opcional | Si la mecánica valida compra |
-| 8 | Producto Gulf comprado | Dropdown | Opcional | Si aplica a productos específicos |
-| 9 | Acepto términos y condiciones | Checkbox | Sí | Enlazar a T&C de la promo (bloquea envío si no marca) |
-| 10 | Autorizo recibir comunicaciones de Gulf | Checkbox | Opcional | Opt-in de marketing (recomendado separarlo del #9) |
+| 1 | Nombre y Apellido | Short text | Sí | — |
+| 2 | Número de celular | **Phone number** | Sí | En Tally usar tipo teléfono (valida formato). El cliente lo tenía como texto simple. |
+| 3 | Correo | **Email** | Sí | En Tally usar tipo email (valida formato). El cliente lo tenía como texto simple. |
+| 4 | Maneja vehículo pesado o liviano? | Multiple choice | Sí | Opciones: **Liviano**, **Pesado** |
+| 5 | Que viscosidad utilizas? | Short text | Sí | Se puede mejorar a **Dropdown** con viscosidades comunes (20W-50, 15W-40, 10W-30, 5W-30, "No sé / otra"). Confirmar con Gulf. |
+| 6 | Cual es el nombre de tu empresa o lugar de trabajo? | Short text | Sí | — |
 
-\* Ajustar obligatoriedad según la mecánica final.
+> **Nota sobre "Requerido":** el Google Form del cliente no marcaba obligatoriedad.
+> Para una promo conviene que 1–4 y 6 sean requeridos (datos de contacto y
+> segmentación). Confirmar cuáles quiere Gulf obligatorios.
 
-## Lógica / comportamiento
+## Mejoras respecto al form original (opcionales, a confirmar con Gulf)
+- **Teléfono y correo con validación** nativa de Tally (menos datos basura).
+- **Viscosidad como dropdown** en vez de texto libre (respuestas consistentes → mejor data).
+- **Términos y condiciones + aviso de privacidad**: el form original no los tenía. Si
+  la promo entrega premio, es recomendable agregar un checkbox de aceptación de T&C
+  (requerido) y, aparte, un opt-in opcional de marketing. **Legal de Gulf decide.**
+
+## Comportamiento
 - **Una sola página** (form corto = más conversión desde el QR).
-- Validaciones nativas de Tally en teléfono y correo.
-- Botón de envío con texto de marca: ej. **"¡Participar!"**.
-- **Página de gracias:** "🎉 ¡Gracias por participar en *Gana con Gulf*! Pronto te
-  contactaremos si resultas ganador." + recordatorio de T&C.
-- (Opcional) **Hidden fields** para trackear origen si se usan varios QR (ej. `utm`
-  o `estacion` por código) — útil si quieren saber de qué punto vino cada registro.
+- Botón de envío branded (ej. **"¡Participar!"**).
+- **Página de gracias** con marca Gulf: "🎉 ¡Gracias por participar!".
+- Branding (logo, colores, CSS) → ver `../brand/brand.md` y `custom-css.css`.
 
-## Integraciones
-- **Google Sheets** (nativa) — cada campo = una columna. Ver Fase 5 del RUNBOOK.
-- Tally agrega automáticamente **timestamp** de envío.
+## Integración
+- **Google Sheets** (nativa): hoja **"Gulf Motopóker — Respuestas"** con columnas
+  que calzan a estos campos. Ver Fase 5 del RUNBOOK.
+- Tally agrega **timestamp** automático por envío.
 
-## Privacidad / legal (recordatorio)
-- Incluir enlace visible a **Términos y Condiciones** y **Aviso de privacidad**.
-- El opt-in de marketing (#10) debe ser **separado y opcional** del consentimiento
-  de participación (#9) — buena práctica de datos.
+## Columnas de la Google Sheet (orden)
+`Marca temporal` · `Nombre y Apellido` · `Número de celular` · `Correo` ·
+`Tipo de vehículo` · `Viscosidad` · `Empresa o lugar de trabajo`
