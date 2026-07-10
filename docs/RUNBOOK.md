@@ -15,7 +15,7 @@ Leyenda:
 | Concepto | Costo real | Frecuencia | Notas |
 |---|---|---|---|
 | Dominio `.com` (Cloudflare, al costo) | ~US$10.44 (~Q80–90) | anual | 1er año incluido en la cotización; renovación ~Q120/año a Gulf |
-| Tally Pro | US$29/mes o **US$290/año** (2 meses gratis anual) | mensual/anual | necesario para quitar sello + dominio propio |
+| Tally Pro | **US$29/mes** | mensual (solo mientras la promo esté viva) | necesario para quitar sello + dominio propio. Se activa al salir en vivo y se cancela al cerrar la promo. |
 | Google Sheets | Gratis | — | con cuenta Google existente |
 | Hosting landing | Gratis | — | lo hostea Tally directamente |
 
@@ -58,15 +58,21 @@ Pasos:
 
 ---
 
-## FASE 2 — Crear cuenta Tally + activar Pro 🟠
+## FASE 2 — Cuenta Tally + Pro (enfoque: Pro mensual solo al salir en vivo) 🟠
 
-1. Ir a [tally.so](https://tally.so) → crear cuenta con el correo del proyecto.
-2. Crear un **Workspace** para Gulf (ej. "Gulf — Gana con Gulf").
-3. Activar **Tally Pro** (Settings → Billing). Plan anual sale más barato (US$290/año).
-   - Pro habilita: quitar sello "Made with Tally", dominio propio, remover branding,
-     inyección de CSS, y más lógica.
+**Estrategia de costo:** construir todo en el plan **gratis**, y activar **Tally Pro
+mensual (US$29/mes) recién al salir en vivo**. Cancelar Pro cuando cierre la promo.
 
-**Resultado:** workspace Pro listo para construir el formulario y conectar dominio.
+1. ✅ Cuenta Tally creada con el correo del proyecto (`hola@fenomenostudio.com`).
+2. **Workspace:** crear workspaces es función Pro. Por ahora usar el **workspace
+   personal por defecto**. El workspace dedicado "Gulf" es opcional y se puede crear
+   cuando se active Pro.
+3. **Ahora (gratis)** se puede: construir el form, tema/colores de marca, conectar
+   Google Sheets, página de gracias.
+4. **Al salir en vivo** activar **Pro** (Settings → Billing → mensual) para habilitar:
+   dominio propio, quitar sello "Made with Tally" e inyección de CSS.
+
+**Resultado:** form construido en free; Pro se enciende justo antes del lanzamiento.
 
 ---
 
