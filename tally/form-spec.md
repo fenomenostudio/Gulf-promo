@@ -26,6 +26,34 @@
   la promo entrega premio, es recomendable agregar un checkbox de aceptación de T&C
   (requerido) y, aparte, un opt-in opcional de marketing. **Legal de Gulf decide.**
 
+## Términos y condiciones — cómo implementarlos en Tally
+
+Limitaciones verificadas de Tally:
+- El **code injection es solo CSS** (no HTML ni JS) → **no se puede hacer un popup/modal propio**.
+- **No existe bloque acordeón/desplegable** para el visitante (el "fold" del editor es
+  solo para ordenar la vista mientras se construye).
+- ⚠️ **No poner los T&C después del botón de envío**: eso es la página de gracias, o
+  sea que la persona ya aceptó sin poder leerlos. El consentimiento debe ser informado
+  **antes** de marcar "acepto".
+
+Dos rutas válidas (se pueden combinar):
+
+**A. Acordeón con lógica condicional** (lo más cercano a un popup, sin navegar)
+1. Checkbox **no requerido**: "📄 Ver términos y condiciones".
+2. Debajo, bloque de texto con los T&C completos.
+3. Ícono **⚡ (lógica condicional)** en la barra superior → regla:
+   *cuando "Ver términos y condiciones" está marcado → mostrar el bloque de texto.*
+4. Después, el checkbox **requerido**: "Acepto los términos y condiciones".
+
+**B. Página propia en el dominio** (requiere Pro, ya activo)
+- Crear un segundo form de solo texto con los T&C y mapearlo a
+  `ganacongulf.com/terminos` (Domains → Map form → slug `terminos`).
+- En el form principal, enlazarlo abriendo en **pestaña nueva**: la persona no pierde
+  lo que llevaba lleno y sigue dentro del dominio de la promo.
+
+**Separar siempre** el consentimiento de participación (requerido) del opt-in de
+marketing (opcional). El **contenido legal lo define Gulf**, no la agencia.
+
 ## Comportamiento
 - **Una sola página** (form corto = más conversión desde el QR).
 - Botón de envío branded (ej. **"¡Participar!"**).
