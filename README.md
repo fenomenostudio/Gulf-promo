@@ -51,16 +51,20 @@ caen en **Google Sheets**.
 
 ## Estado
 
-- [x] QR generado y verificado (decodifica a `https://ganacongulf.com`)
+- [x] QR generado y verificado (decodifica a `https://ganacongulf.com`); versión con logo Gulf
 - [x] Runbook y specs documentados
-- [ ] Dominio registrado (requiere pago — agencia)
-- [ ] Cuenta Tally + Pro (requiere cuenta/pago — agencia)
-- [ ] Formulario construido en Tally
-- [ ] Dominio conectado a Tally (DNS)
-- [x] Google Sheet de respuestas creada ("Gana con Gulf — Respuestas", campos del cliente)
-- [x] Formulario branded en Tally (colores/logo/fuente oficiales de marca)
-- [x] Formulario del cliente mapeado a spec de Tally
-- [ ] Google Sheets conectado a Tally
-- [ ] Prueba end-to-end
+- [x] Dominio `ganacongulf.com` registrado (Cloudflare, vence 10-jul-2027 — **auto-renew apagado**)
+- [x] Cuenta Tally + **Pro activo** (mensual)
+- [x] Formulario construido y branded en Tally (colores/logo/fuente oficiales de marca)
+- [x] Google Sheet de respuestas creada ("Gana con Gulf — Respuestas")
+- [x] Google Sheets conectado a Tally
+- [x] Página de gracias configurada
+- [x] Bloque de Instagram (link + checkbox requerido)
+- [x] DNS de Tally en Cloudflare (A `@` → 35.205.106.218 y CNAME `www` → cname.tally.so, ambos **DNS only**) — verificado resolviendo
+- [ ] **Mapear el formulario a la raíz del dominio** (Tally → Domains → Domain) — hoy devuelve 404
+- [ ] Quitar el sello "Made with Tally"
+- [ ] Términos y condiciones (contenido pendiente de Gulf)
+- [ ] Prueba end-to-end (escaneo → form → fila en la Sheet)
+- [ ] Imprimir QR en volumen (solo después de la prueba end-to-end)
 
 👉 **Empezá por [`docs/RUNBOOK.md`](docs/RUNBOOK.md).**
