@@ -41,15 +41,21 @@ Dos rutas válidas (se pueden combinar):
 **A. Acordeón con lógica condicional** (lo más cercano a un popup, sin navegar)
 1. Checkbox **no requerido**: "📄 Ver términos y condiciones".
 2. Debajo, bloque de texto con los T&C completos.
-3. Ícono **⚡ (lógica condicional)** en la barra superior → regla:
-   *cuando "Ver términos y condiciones" está marcado → mostrar el bloque de texto.*
+3. La lógica **no es un ícono de la barra superior**: es un bloque. Con el cursor debajo
+   del checkbox, escribir **`/logic`** (atajo **⌘/Ctrl + Shift + L**) y configurar:
+   *When "Ver términos y condiciones" is checked → Show → [bloque de texto].*
+   Si el texto aparece por defecto, ocultar ese bloque con **Hide (⌘⇧H)** desde su menú.
 4. Después, el checkbox **requerido**: "Acepto los términos y condiciones".
 
-**B. Página propia en el dominio** (requiere Pro, ya activo)
+**B. Página propia en el dominio** (requiere Pro, ya activo) — **ruta elegida**
 - Crear un segundo form de solo texto con los T&C y mapearlo a
   `ganacongulf.com/terminos` (Domains → Map form → slug `terminos`).
 - En el form principal, enlazarlo abriendo en **pestaña nueva**: la persona no pierde
   lo que llevaba lleno y sigue dentro del dominio de la promo.
+- Tally siempre renderiza un botón de envío, incluso en una página de solo texto.
+  Ocultarlo inyectando `terminos-ocultar-boton.css` **solo en ese formulario**
+  (Settings → Code injection → CSS). No usar "Redirect on completion" con un botón
+  visible: cada clic registraría una respuesta vacía y ensuciaría los datos.
 
 **Separar siempre** el consentimiento de participación (requerido) del opt-in de
 marketing (opcional). El **contenido legal lo define Gulf**, no la agencia.

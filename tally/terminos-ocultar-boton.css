@@ -1,0 +1,18 @@
+/* ============================================================================
+   Gulf — "Gana con Gulf" | CSS para la PÁGINA DE TÉRMINOS Y CONDICIONES
+   ----------------------------------------------------------------------------
+   Pegar SOLO en el formulario de T&C (el mapeado a ganacongulf.com/terminos):
+   Settings → Code injection → CSS.
+
+   ⚠️ NO pegar esto en el formulario principal: le ocultaría el botón "Participar".
+
+   Por qué esta clase: en el HTML publicado, Tally envuelve el botón así:
+     <div class="sc-de0e1144-2 hMJGnf tally-submit-button">
+   Las clases tipo `sc-...` son generadas y cambian entre versiones;
+   `.tally-submit-button` es la clase semántica estable de Tally.
+   ============================================================================ */
+
+/* La página de T&C es solo texto: no necesita botón de envío. */
+.tally-submit-button {
+  display: none !important;
+}
