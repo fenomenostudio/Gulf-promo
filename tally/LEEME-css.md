@@ -143,3 +143,19 @@ Dos guardas en el script, aplicadas solo al momento de **apagar** el estado comp
 
 El efecto compacto quedó **solo en escritorio**; en móvil se eliminó por decisión de
 diseño (no aportaba).
+
+### Tamaño del bloque "Período de participación"
+
+Va deliberadamente más pequeño que cualquier otro texto del formulario: **14px en
+escritorio y 13px en móvil**, cuando el texto legible más chico del resto es 16px y 15px
+respectivamente. (Los 11px y 13px que aparecen en otras reglas son los íconos ✓
+decorativos, no texto de lectura.)
+
+Razón de diseño: la promo dura hasta el 19 de octubre, y un período largo mostrado con
+demasiado peso visual invita a postergar el registro. La información tiene que estar,
+pero sin competir con el llamado a participar.
+
+Las reglas van **al final del archivo** a propósito: comparten especificidad con
+`.tally-page-1 .tally-block-text` y con la media query de móvil, así que ganan por
+orden de cascada. Si se agregan reglas nuevas después, hay que dejarlas antes de este
+bloque o subirle la especificidad.
