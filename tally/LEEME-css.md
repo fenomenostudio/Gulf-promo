@@ -88,3 +88,28 @@ targeteados por su clase única de Tally:
 crear el bloque, el ID cambia** y hay que actualizar el CSS. Si algún día uno de los
 dos vuelve a aparecer con tarjeta, la causa es esa: buscar la clase nueva en el HTML
 publicado y reemplazarla acá.
+
+## Experimento: header que se encoge al hacer scroll
+
+Archivos: `custom-css-con-scroll.css` (CSS) + `scroll-header.html` (script).
+
+Cómo funciona: el script agrega el atributo `data-gulf-scroll="on"` al `<html>`
+cuando el scroll pasa los 120px, y el CSS reacciona a ese atributo. Es **un solo
+cambio discreto** al cruzar un umbral, no una animación por píxel — mucho más barato
+y estable que `animation-timeline: scroll()`, que fue lo que se eliminó por inestable.
+
+| Estado | Escritorio | Móvil |
+|---|---|---|
+| Reposo | caja 270px, logos 140px | caja 197px, logos 95px |
+| Compacto | caja 150px, logos 90px | caja 120px, logos 70px |
+
+El `<script>` va en el code injection **a nivel de dominio** (Domains → General
+Settings), que es donde Tally documenta los códigos de analítica. NO va en el campo
+Custom CSS del formulario.
+
+**El CSS es inofensivo por sí solo:** si el script nunca corre o Tally lo rechaza, el
+atributo no aparece nunca y el header se queda en estado de reposo. O sea que se puede
+pegar el CSS sin riesgo aunque el script falle.
+
+Si el script no se puede aplicar, el estado final del proyecto es
+`custom-css-final.css` sin efecto de scroll.

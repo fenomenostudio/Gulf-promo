@@ -1,0 +1,17 @@
+<script>
+(function () {
+  var root = document.documentElement;
+  var umbral = 120;
+  var activo = false;
+  function actualizar() {
+    var debe = (window.pageYOffset || root.scrollTop || 0) > umbral;
+    if (debe === activo) return;
+    activo = debe;
+    if (debe) root.setAttribute('data-gulf-scroll', 'on');
+    else root.removeAttribute('data-gulf-scroll');
+  }
+  window.addEventListener('scroll', actualizar, { passive: true });
+  window.addEventListener('resize', actualizar, { passive: true });
+  actualizar();
+})();
+</script>
