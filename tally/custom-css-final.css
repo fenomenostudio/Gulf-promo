@@ -593,14 +593,21 @@ body,
   .tally-form-cover picture img {
     object-fit: cover !important;
     object-position: center center !important;
-    transform: scale(0.7) !important;
+    transform: scale(0.595) !important;
     transform-origin: center center !important;
   }
 }
 
 @media screen and (max-width: 768px) {
   .tally-form-cover {
-    aspect-ratio: 1920 / 809 !important;
+    aspect-ratio: 1920 / 971 !important;
+  }
+
+  .tally-form-cover img,
+  .tally-form-cover picture,
+  .tally-form-cover picture img {
+    transform: scale(1.2) !important;
+    transform-origin: center center !important;
   }
 
   .tally-page {
