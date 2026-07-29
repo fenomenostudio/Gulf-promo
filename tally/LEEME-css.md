@@ -68,3 +68,18 @@ mencionando JavaScript e inyección de código.
 
 → Pegar el CSS **sin comentarios**, y confirmar que no aparezca el mensaje rojo
 antes de dar por hecho que se aplicó.
+
+## Bloques sin estilo de tarjeta
+
+Dos bloques de texto van planos (sin tarjeta, sin borde naranja, sin barra navy),
+targeteados por su clase única de Tally:
+
+| Bloque | Clase |
+|---|---|
+| "Ver términos y condiciones" | `tally-block-e503a3de-72b4-4eb8-9c95-a2f087e67296` |
+| "Período de participación" | `tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8` |
+
+⚠️ Esas clases son el ID interno del bloque en Tally. **Si se borra y se vuelve a
+crear el bloque, el ID cambia** y hay que actualizar el CSS. Si algún día uno de los
+dos vuelve a aparecer con tarjeta, la causa es esa: buscar la clase nueva en el HTML
+publicado y reemplazarla acá.

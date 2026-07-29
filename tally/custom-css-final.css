@@ -352,6 +352,25 @@ body,
   display: none !important;
 }
 
+.tally-page-1 .tally-block-e503a3de-72b4-4eb8-9c95-a2f087e67296,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8 {
+  margin: 0 0 22px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.tally-page-1 .tally-block-e503a3de-72b4-4eb8-9c95-a2f087e67296::before,
+.tally-page-1 .tally-block-e503a3de-72b4-4eb8-9c95-a2f087e67296::after,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8::before,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8::after {
+  content: none !important;
+  display: none !important;
+}
+
 @media screen and (min-width: 769px) {
   .tally-page-1 .tally-block-text li:hover {
     transform: translateY(-3px) !important;
@@ -606,7 +625,7 @@ body,
   .tally-form-cover img,
   .tally-form-cover picture,
   .tally-form-cover picture img {
-    transform: scale(1.2) !important;
+    transform: scale(1.386) !important;
     transform-origin: center center !important;
   }
 
