@@ -798,15 +798,3 @@ body,
     transform: scale(1.285) !important;
   }
 }
-
-@media screen and (max-width: 768px) {
-  [data-gulf-scroll="on"] .tally-form-cover {
-    aspect-ratio: 1920 / 591 !important;
-  }
-
-  [data-gulf-scroll="on"] .tally-form-cover img,
-  [data-gulf-scroll="on"] .tally-form-cover picture,
-  [data-gulf-scroll="on"] .tally-form-cover picture img {
-    transform: scale(1.25) !important;
-  }
-}

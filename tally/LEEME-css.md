@@ -123,3 +123,23 @@ pegar el CSS sin riesgo aunque el script falle.
 
 Si el script no se puede aplicar, el estado final del proyecto es
 `custom-css-final.css` sin efecto de scroll.
+
+### Corrección del reset al abrir un dropdown (solo escritorio)
+
+Síntoma: al abrir un dropdown en escritorio el header volvía a tamaño grande, y al
+cerrarlo se compactaba otra vez. En móvil no pasaba.
+
+Causa: en escritorio Tally dibuja su propia lista y aplica un **scroll lock** (fija el
+`body`). Con el `body` en `position: fixed`, `window.pageYOffset` devuelve **0**, así que
+el script creía que el usuario estaba en el tope de la página. En móvil se usa el
+selector nativo del sistema, sin lock — por eso ahí no ocurría.
+
+Dos guardas en el script, aplicadas solo al momento de **apagar** el estado compacto:
+
+1. `scrollBloqueado()` — no apaga si el `body` está `position: fixed` o con
+   `overflow: hidden` (o sea, si hay un scroll lock activo).
+2. Salto sospechoso — no apaga si la posición cayó más de 250px de golpe respecto a la
+   lectura anterior. Un scroll real es gradual; un lock salta a 0 de una.
+
+El efecto compacto quedó **solo en escritorio**; en móvil se eliminó por decisión de
+diseño (no aportaba).
