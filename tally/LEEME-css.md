@@ -100,8 +100,18 @@ y estable que `animation-timeline: scroll()`, que fue lo que se eliminó por ine
 
 | Estado | Escritorio | Móvil |
 |---|---|---|
-| Reposo | caja 270px, logos 140px | caja 197px, logos 95px |
-| Compacto | caja 150px, logos 90px | caja 120px, logos 70px |
+| Reposo | `aspect-ratio 1920/270`, scale 1.111 | `aspect-ratio 1920/971`, scale 1.549 |
+| Compacto | `aspect-ratio 1920/150`, scale 1.285 | `aspect-ratio 1920/591`, scale 1.25 |
+
+Dos detalles que se corrigieron tras probarlo en vivo:
+
+1. **El cambio salta en seco si el estado compacto usa `height` fijo**, porque en reposo
+   el alto viene de `aspect-ratio` (= `height: auto`) y no se puede animar desde `auto`.
+   Ambos estados usan `aspect-ratio`, que sí es interpolable.
+2. **Cambiar el alto del header mueve el layout, eso mueve el scroll, y ese movimiento
+   vuelve a disparar el umbral** → el header oscilaba al abrir un dropdown (el navegador
+   acomoda el campo a la vista y mueve el scroll). Se resuelve con histéresis
+   (enciende a 200px, apaga a 60px) más un bloqueo de 500ms después de cada cambio.
 
 El `<script>` va en el code injection **a nivel de dominio** (Domains → General
 Settings), que es donde Tally documenta los códigos de analítica. NO va en el campo
