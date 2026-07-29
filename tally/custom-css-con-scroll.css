@@ -778,19 +778,18 @@ body,
 }
 
 .tally-form-cover {
-  transition: height 0.25s ease !important;
+  transition: aspect-ratio 0.28s ease !important;
 }
 
 .tally-form-cover img,
 .tally-form-cover picture,
 .tally-form-cover picture img {
-  transition: transform 0.25s ease !important;
+  transition: transform 0.28s ease !important;
 }
 
 @media screen and (min-width: 769px) {
   [data-gulf-scroll="on"] .tally-form-cover {
-    aspect-ratio: auto !important;
-    height: 150px !important;
+    aspect-ratio: 1920 / 150 !important;
   }
 
   [data-gulf-scroll="on"] .tally-form-cover img,
@@ -802,8 +801,7 @@ body,
 
 @media screen and (max-width: 768px) {
   [data-gulf-scroll="on"] .tally-form-cover {
-    aspect-ratio: auto !important;
-    height: 120px !important;
+    aspect-ratio: 1920 / 591 !important;
   }
 
   [data-gulf-scroll="on"] .tally-form-cover img,
