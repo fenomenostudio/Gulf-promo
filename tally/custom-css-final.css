@@ -171,7 +171,7 @@ body,
   padding: 26px 28px !important;
   box-sizing: border-box !important;
 
-  color: #243557 !important;
+  color: #002776 !important;
   background: linear-gradient(145deg, #ffffff 0%, #f6f8fd 100%) !important;
 
   border: 1px solid #dce5f3 !important;
@@ -210,7 +210,7 @@ body,
 .tally-page-1 .tally-block-text p {
   margin-top: 0 !important;
   margin-bottom: 17px !important;
-  color: #243557 !important;
+  color: #002776 !important;
   font-size: 18px !important;
   line-height: 1.7 !important;
 }
@@ -459,7 +459,7 @@ body,
   margin: 0 0 18px !important;
   padding: 0 !important;
 
-  color: #263550 !important;
+  color: #002776 !important;
   background: transparent !important;
 
   border: 0 !important;
@@ -486,7 +486,7 @@ body,
 .tally-page-2 .tally-block-text p {
   margin-top: 0 !important;
   margin-bottom: 20px !important;
-  color: #263550 !important;
+  color: #002776 !important;
   font-size: 18px !important;
   line-height: 1.7 !important;
 }
@@ -537,6 +537,7 @@ body,
 .tally-app input,
 .tally-app textarea,
 .tally-app select {
+  color: #002776 !important;
   border: 1px solid #d8e0ed !important;
   border-radius: 10px !important;
   background-color: #ffffff !important;
@@ -592,10 +593,16 @@ body,
   .tally-form-cover picture img {
     object-fit: cover !important;
     object-position: center center !important;
+    transform: scale(0.7) !important;
+    transform-origin: center center !important;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .tally-form-cover {
+    aspect-ratio: 1920 / 809 !important;
+  }
+
   .tally-page {
     max-width: 100% !important;
     padding: 26px 22px 60px !important;

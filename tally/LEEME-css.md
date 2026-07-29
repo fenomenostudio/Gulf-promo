@@ -44,9 +44,15 @@ Verificados leyendo el HTML publicado:
 El PNG del cover es 1920×647 pero el contenido visible ocupa solo de `y=181` a
 `y=482` (302px). Arriba y abajo hay ~28% y ~25% de transparencia.
 
-Por eso en escritorio se usa `aspect-ratio: 1920/350` con `object-fit: cover`:
-recorta el vacío transparente, no los logos (quedan 32px de margen arriba y 16px
-abajo). En móvil se mantiene la proporción completa 1920/647.
+En escritorio se usa `aspect-ratio: 1920/350` con `object-fit: cover` (recorta el
+vacío transparente, no los logos) más `transform: scale(0.7)` para dar aire: los
+logos quedan en 211px dentro de una caja de 350px, o sea 139px de margen total.
+
+En móvil el header es 25% más alto que la proporción original:
+`aspect-ratio: 1920/809` (a 390px de ancho son 164px de alto, antes 131px).
+
+Todos los textos van en Gulf Dark Blue `#002776`, incluido el que la persona
+escribe en los campos. El único texto blanco es el de las tarjetas azules.
 
 ## Regla importante del validador de Tally
 
