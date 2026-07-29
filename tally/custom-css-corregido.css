@@ -1,0 +1,888 @@
+/* =========================================================================
+   GULF — "Gana con Gulf" | CSS del formulario (VERSIÓN CORREGIDA)
+   -------------------------------------------------------------------------
+   Qué se corrigió respecto a la versión anterior:
+
+   1. ELIMINADO el header compacto con `animation-timeline: scroll()`.
+      Era la causa principal de la pantalla blanca: animaba `clip-path`
+      y `transform` con custom properties NO interpolables, sobre un
+      elemento sticky con `contain: paint`. Al abrir un dropdown el
+      navegador recompone capas y el compositor falla.
+
+   2. ELIMINADOS `contain: paint`, `isolation: isolate`, `will-change`,
+      `translateZ(0)` y `backface-visibility`. Cinco mecanismos de capa
+      sobre el mismo elemento se pelean entre sí.
+
+   3. ELIMINADOS los selectores `:has()`. Se reevalúan en cada mutación
+      del DOM — por eso el editor de Tally parpadeaba al escribir.
+
+   4. ELIMINADA la animación infinita del resplandor (::before). Un
+      `will-change` con animación infinita mantiene una capa de GPU viva
+      permanentemente. El gradiente ahora es estático (se ve igual).
+
+   5. z-index del cover: 9999 -> 10. Con 9999 los dropdowns de Tally
+      quedaban DEBAJO del header y parecían desaparecer.
+
+   6. `100vw` -> `100%` en la imagen full-bleed. `100vw` incluye la barra
+      de scroll y desbordaba ~15px en escritorio.
+
+   7. `.tally-form-cover` consolidado en UNA sola regla (estaba declarado
+      4 veces con propiedades en conflicto).
+
+   Nota: el efecto de "header que se encoge al hacer scroll" NO es
+   reproducible de forma estable solo con CSS. Ver nota al final.
+   ========================================================================= */
+
+
+/* =========================================
+   CONFIGURACIÓN GENERAL
+========================================= */
+
+html,
+body,
+.tally-app {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #ffffff !important;
+
+  /* `clip` en lugar de `hidden`: `hidden` convierte el elemento en
+     contenedor de scroll y rompe `position: sticky`. */
+  overflow-x: clip !important;
+}
+
+.tally-page {
+  width: 100% !important;
+  max-width: 760px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 30px 28px 72px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+
+/* =========================================
+   COVER SUPERIOR GULF x WILLIAMS
+   Imagen 1920 x 647 px, PNG con fondo transparente.
+   UNA sola declaración: sticky simple, sin animaciones.
+========================================= */
+
+.tally-form-cover {
+  position: sticky !important;
+  top: 0 !important;
+
+  /* Suficiente para quedar sobre el contenido, sin tapar los dropdowns. */
+  z-index: 10 !important;
+
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1920 / 647 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+
+  /* Gradiente Gulf (estático, sin animación) */
+  background-color: #020719 !important;
+  background-image:
+    radial-gradient(
+      ellipse 62% 125% at 74% 4%,
+      rgba(25, 61, 255, 0.98) 0%,
+      rgba(14, 43, 205, 0.92) 24%,
+      rgba(7, 26, 127, 0.70) 46%,
+      rgba(3, 12, 55, 0.30) 66%,
+      rgba(2, 7, 25, 0) 82%
+    ),
+    radial-gradient(
+      ellipse 54% 105% at 57% 52%,
+      rgba(10, 35, 165, 0.64) 0%,
+      rgba(6, 22, 104, 0.42) 38%,
+      rgba(2, 7, 25, 0) 74%
+    ),
+    radial-gradient(
+      ellipse 48% 80% at 52% 105%,
+      rgba(8, 27, 125, 0.66) 0%,
+      rgba(4, 17, 75, 0.38) 42%,
+      rgba(2, 7, 25, 0) 76%
+    ),
+    linear-gradient(
+      102deg,
+      #01040e 0%,
+      #010512 19%,
+      #020719 37%,
+      #06123f 54%,
+      #0a218b 72%,
+      #071852 88%,
+      #020719 100%
+    ) !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+
+  box-shadow: 0 8px 24px rgba(0, 20, 70, 0.22) !important;
+}
+
+.tally-form-cover img,
+.tally-form-cover picture,
+.tally-form-cover picture img {
+  position: relative !important;
+  z-index: 2 !important;
+
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: none !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  background-color: transparent !important;
+  background-image: none !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+@media screen and (max-width: 576px) {
+  .tally-form-cover {
+    box-shadow: 0 5px 16px rgba(0, 20, 70, 0.2) !important;
+  }
+}
+
+
+/* =========================================
+   OCULTAR FORM TITLE
+========================================= */
+
+.tally-block-form-title {
+  display: none !important;
+}
+
+
+/* =========================================
+   PÁGINA 1
+========================================= */
+
+.tally-page-1 {
+  padding-top: 24px !important;
+}
+
+
+/* TÍTULO PRINCIPAL */
+
+.tally-page-1 .tally-block-heading-1 {
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
+  padding: 0 !important;
+
+  color: #002776 !important;
+
+  font-size: 40px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.tally-page-1 .tally-block-heading-1 strong,
+.tally-page-1 .tally-block-heading-1 b {
+  color: #002776 !important;
+  font-weight: 800 !important;
+}
+
+
+/* =========================================
+   IMAGEN DE PREMIOS
+   Antes usaba 100vw + margin-left:-50vw, que desbordaba
+   el ancho de la barra de scroll en escritorio.
+   Ahora se mantiene dentro de la columna: estable en todo.
+========================================= */
+
+.tally-page-1 .tally-block-image {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin: 0 0 32px !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+
+  line-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.tally-page-1 .tally-block-image > div,
+.tally-page-1 .tally-block-image > div > div,
+.tally-page-1 .tally-block-image figure,
+.tally-page-1 .tally-block-image picture,
+.tally-page-1 .tally-block-image img {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.tally-page-1 .tally-block-image img {
+  border-radius: 12px !important;
+}
+
+
+/* =========================================
+   BLOQUES DE TEXTO (tarjetas)
+========================================= */
+
+.tally-page-1 .tally-block-text {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+
+  margin: 0 0 28px !important;
+  padding: 26px 28px !important;
+  box-sizing: border-box !important;
+
+  color: #243557 !important;
+  background: linear-gradient(145deg, #ffffff 0%, #f6f8fd 100%) !important;
+
+  border: 1px solid #dce5f3 !important;
+  border-left: 5px solid #ff6319 !important;
+  border-radius: 14px !important;
+
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
+
+  box-shadow: 0 10px 28px rgba(0, 39, 118, 0.09) !important;
+  overflow: hidden !important;
+}
+
+.tally-page-1 .tally-block-text::before {
+  content: none !important;
+  display: none !important;
+}
+
+.tally-page-1 .tally-block-text::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 80px !important;
+  height: 4px !important;
+  background-color: #002776 !important;
+}
+
+.tally-page-1 .tally-block-text > div {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tally-page-1 .tally-block-text p {
+  margin-top: 0 !important;
+  margin-bottom: 17px !important;
+  color: #243557 !important;
+  font-size: 18px !important;
+  line-height: 1.7 !important;
+}
+
+.tally-page-1 .tally-block-text p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.tally-page-1 .tally-block-text strong,
+.tally-page-1 .tally-block-text b {
+  color: #002776 !important;
+  font-weight: 800 !important;
+}
+
+
+/* =========================================
+   TÍTULOS DE SECCIÓN
+========================================= */
+
+.tally-page-1 .tally-block-heading-2 {
+  position: relative !important;
+
+  margin-top: 36px !important;
+  margin-bottom: 22px !important;
+  padding: 8px 10px 13px 25px !important;
+
+  color: #002776 !important;
+  background: transparent !important;
+
+  border: 0 !important;
+  border-bottom: 3px solid #ff6319 !important;
+  border-radius: 0 !important;
+
+  font-size: 27px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.02em !important;
+
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.tally-page-1 .tally-block-heading-2::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: -3px !important;
+  width: 11px !important;
+  height: 35px !important;
+  background-color: #002776 !important;
+  border-radius: 3px 3px 0 0 !important;
+}
+
+.tally-page-1 .tally-block-heading-2::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 0 !important;
+  bottom: -3px !important;
+  width: 64px !important;
+  height: 3px !important;
+  background-color: #002776 !important;
+}
+
+
+/* =========================================
+   TARJETAS DE PREMIOS (lista)
+========================================= */
+
+.tally-page-1 .tally-block-text ul {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 14px !important;
+  margin: 6px 0 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.tally-page-1 .tally-block-text li {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+
+  min-height: 72px !important;
+  margin: 0 !important;
+  padding: 18px 20px 18px 60px !important;
+
+  color: #ffffff !important;
+  background-color: #002776 !important;
+  background-image: linear-gradient(
+    120deg,
+    #00194f 0%,
+    #002776 62%,
+    #123db2 100%
+  ) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-left: 7px solid #ff6319 !important;
+  border-bottom: 4px solid #001844 !important;
+  border-radius: 12px !important;
+
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+
+  box-shadow: 0 8px 20px rgba(0, 39, 118, 0.22) !important;
+  overflow: hidden !important;
+
+  /* Solo transición en hover (sin will-change: no crea capa permanente) */
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.tally-page-1 .tally-block-text li,
+.tally-page-1 .tally-block-text li p,
+.tally-page-1 .tally-block-text li span,
+.tally-page-1 .tally-block-text li strong,
+.tally-page-1 .tally-block-text li b,
+.tally-page-1 .tally-block-text li div {
+  color: #ffffff !important;
+}
+
+.tally-page-1 .tally-block-text li strong,
+.tally-page-1 .tally-block-text li b {
+  font-weight: 800 !important;
+}
+
+.tally-page-1 .tally-block-text li::before {
+  content: "✓" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 19px !important;
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 26px !important;
+  height: 26px !important;
+
+  color: #ffffff !important;
+  background-color: #ff6319 !important;
+  border: 2px solid #ffffff !important;
+  border-radius: 50% !important;
+
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.tally-page-1 .tally-block-text li::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media screen and (min-width: 769px) {
+  .tally-page-1 .tally-block-text li:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 14px 28px rgba(0, 39, 118, 0.3) !important;
+  }
+}
+
+
+/* =========================================
+   PERÍODO DE PARTICIPACIÓN
+========================================= */
+
+.tally-page-1 .tally-block-heading-3 {
+  position: relative !important;
+
+  margin-top: 32px !important;
+  margin-bottom: 14px !important;
+  padding: 16px 20px 16px 24px !important;
+
+  color: #ffffff !important;
+  background-color: #002776 !important;
+  background-image: linear-gradient(
+    110deg,
+    #00194f 0%,
+    #002776 72%,
+    #123cae 100%
+  ) !important;
+
+  border: 0 !important;
+  border-left: 7px solid #ff6319 !important;
+  border-radius: 11px !important;
+
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+
+  box-shadow: 0 9px 22px rgba(0, 39, 118, 0.18) !important;
+}
+
+
+/* =========================================
+   PÁGINA 2 — CONFIRMACIÓN / GRACIAS
+========================================= */
+
+.tally-page-2 {
+  position: relative !important;
+
+  width: calc(100% - 40px) !important;
+  max-width: 760px !important;
+
+  margin: 48px auto 72px !important;
+  padding: 40px 40px 36px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+
+  background: linear-gradient(145deg, #ffffff 0%, #f5f8ff 100%) !important;
+
+  border: 1px solid #dce5f3 !important;
+  border-top: 8px solid #002776 !important;
+  border-left: 6px solid #ff6319 !important;
+  border-radius: 18px !important;
+
+  box-shadow: 0 18px 44px rgba(0, 39, 118, 0.14) !important;
+}
+
+.tally-page-2::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 130px !important;
+  height: 8px !important;
+  background-color: #ff6319 !important;
+}
+
+.tally-page-2 .tally-block-heading-1 {
+  position: relative !important;
+  margin: 0 0 25px !important;
+  padding: 4px 0 4px 54px !important;
+
+  color: #002776 !important;
+
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.tally-page-2 .tally-block-heading-1::before {
+  content: "✓" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 38px !important;
+  height: 38px !important;
+
+  color: #ffffff !important;
+  background-color: #ff6319 !important;
+  border-radius: 50% !important;
+
+  font-size: 20px !important;
+  font-weight: 800 !important;
+
+  box-shadow: 0 7px 17px rgba(255, 99, 25, 0.25) !important;
+}
+
+.tally-page-2 .tally-block-text {
+  width: 100% !important;
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+
+  color: #263550 !important;
+  background: transparent !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-size: 18px !important;
+  line-height: 1.7 !important;
+  overflow: visible !important;
+}
+
+.tally-page-2 .tally-block-text::before,
+.tally-page-2 .tally-block-text::after {
+  content: none !important;
+  display: none !important;
+}
+
+.tally-page-2 .tally-block-text > div {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tally-page-2 .tally-block-text p {
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
+  color: #263550 !important;
+  font-size: 18px !important;
+  line-height: 1.7 !important;
+}
+
+.tally-page-2 .tally-block-text strong,
+.tally-page-2 .tally-block-text b {
+  color: #002776 !important;
+  font-weight: 800 !important;
+}
+
+
+/* =========================================
+   ENLACE DE INSTAGRAM COMO BOTÓN
+========================================= */
+
+.tally-page-2 a[href*="instagram.com"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin-top: 4px !important;
+  padding: 12px 18px !important;
+
+  color: #ffffff !important;
+  background-color: #ff6319 !important;
+
+  border: 1px solid #ff6319 !important;
+  border-radius: 999px !important;
+
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+
+  box-shadow: 0 9px 20px rgba(255, 99, 25, 0.24) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease !important;
+}
+
+.tally-page-2 a[href*="instagram.com"]::after {
+  content: "↗" !important;
+  margin-left: 9px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+.tally-page-2 a[href*="instagram.com"]:hover {
+  transform: translateY(-2px) !important;
+  background-color: #e85411 !important;
+  box-shadow: 0 13px 26px rgba(255, 99, 25, 0.32) !important;
+}
+
+
+/* =========================================
+   CAMPOS DEL FORMULARIO
+   Nota: NO tocar overflow ni position de los contenedores de
+   los dropdowns; es lo que hace que la lista de opciones se corte.
+========================================= */
+
+.tally-app input,
+.tally-app textarea,
+.tally-app select {
+  border: 1px solid #d8e0ed !important;
+  border-radius: 10px !important;
+  background-color: #ffffff !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.tally-app input:focus,
+.tally-app textarea:focus,
+.tally-app select:focus {
+  border-color: #002776 !important;
+  box-shadow: 0 0 0 3px rgba(0, 39, 118, 0.12) !important;
+}
+
+
+/* =========================================
+   BOTÓN PRINCIPAL
+========================================= */
+
+.tally-submit-button {
+  margin-top: 28px !important;
+}
+
+.tally-submit-button > div,
+.tally-submit-button > div > div,
+.tally-submit-button button {
+  width: 100% !important;
+}
+
+.tally-submit-button button {
+  min-height: 52px !important;
+  padding: 14px 26px !important;
+
+  color: #ffffff !important;
+  background-color: #ff6319 !important;
+
+  border: 1px solid #ff6319 !important;
+  border-radius: 11px !important;
+
+  font-size: 17px !important;
+  font-weight: 800 !important;
+
+  box-shadow: 0 10px 22px rgba(255, 99, 25, 0.25) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.tally-submit-button button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 27px rgba(255, 99, 25, 0.34) !important;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width: 768px) {
+  .tally-page {
+    max-width: 100% !important;
+    padding: 26px 22px 60px !important;
+  }
+
+  .tally-page-2 {
+    width: calc(100% - 36px) !important;
+    margin-top: 34px !important;
+    margin-bottom: 55px !important;
+    padding: 34px 30px 30px !important;
+  }
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media screen and (max-width: 576px) {
+  .tally-page {
+    max-width: 100% !important;
+    padding: 20px 18px 52px !important;
+  }
+
+  .tally-page-1 {
+    padding-top: 18px !important;
+  }
+
+  .tally-page-1 .tally-block-heading-1 {
+    margin-bottom: 17px !important;
+    font-size: 30px !important;
+    line-height: 1.12 !important;
+  }
+
+  .tally-page-1 .tally-block-image {
+    margin-bottom: 24px !important;
+  }
+
+  .tally-page-1 .tally-block-text {
+    margin-bottom: 24px !important;
+    padding: 21px 18px !important;
+    border-left-width: 4px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    line-height: 1.62 !important;
+  }
+
+  .tally-page-1 .tally-block-text::after {
+    width: 55px !important;
+    height: 3px !important;
+  }
+
+  .tally-page-1 .tally-block-text p {
+    margin-bottom: 15px !important;
+    font-size: 16px !important;
+    line-height: 1.62 !important;
+  }
+
+  .tally-page-1 .tally-block-heading-2 {
+    margin-top: 29px !important;
+    margin-bottom: 20px !important;
+    padding: 7px 6px 12px 21px !important;
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+  }
+
+  .tally-page-1 .tally-block-heading-2::before {
+    width: 9px !important;
+    height: 31px !important;
+  }
+
+  .tally-page-1 .tally-block-heading-2::after {
+    width: 44px !important;
+  }
+
+  .tally-page-1 .tally-block-text ul {
+    gap: 11px !important;
+    margin-top: 4px !important;
+  }
+
+  .tally-page-1 .tally-block-text li {
+    min-height: 0 !important;
+    padding: 16px 14px 16px 52px !important;
+    border-left-width: 6px !important;
+    border-bottom-width: 3px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  .tally-page-1 .tally-block-text li::before {
+    left: 15px !important;
+    width: 23px !important;
+    height: 23px !important;
+    font-size: 11px !important;
+  }
+
+  .tally-page-1 .tally-block-heading-3 {
+    margin-top: 24px !important;
+    padding: 14px 15px 14px 18px !important;
+    border-left-width: 6px !important;
+    border-radius: 9px !important;
+    font-size: 16px !important;
+  }
+
+  .tally-page-2 {
+    width: calc(100% - 28px) !important;
+    margin: 24px auto 44px !important;
+    padding: 26px 20px 24px !important;
+    border-top-width: 6px !important;
+    border-left-width: 5px !important;
+    border-radius: 14px !important;
+  }
+
+  .tally-page-2::after {
+    width: 75px !important;
+    height: 6px !important;
+  }
+
+  .tally-page-2 .tally-block-heading-1 {
+    margin-bottom: 20px !important;
+    padding: 3px 0 3px 45px !important;
+    font-size: 25px !important;
+    line-height: 1.22 !important;
+  }
+
+  .tally-page-2 .tally-block-heading-1::before {
+    width: 33px !important;
+    height: 33px !important;
+    font-size: 17px !important;
+  }
+
+  .tally-page-2 .tally-block-text,
+  .tally-page-2 .tally-block-text p {
+    margin-bottom: 15px !important;
+    font-size: 16px !important;
+    line-height: 1.62 !important;
+  }
+
+  .tally-page-2 a[href*="instagram.com"] {
+    width: 100% !important;
+    margin-top: 2px !important;
+    padding: 12px 14px !important;
+    box-sizing: border-box !important;
+    font-size: 16px !important;
+  }
+
+  .tally-submit-button button {
+    min-height: 50px !important;
+    font-size: 16px !important;
+  }
+}
+
+
+/* =========================================================================
+   NOTA: HEADER QUE SE ENCOGE AL HACER SCROLL
+
+   No está incluido a propósito. Hacerlo con CSS requiere
+   `animation-timeline: scroll()`, que es experimental y es justamente
+   lo que causaba la pantalla blanca.
+
+   Si el efecto es importante, la vía estable es JavaScript en el bloque
+   de code injection: un listener de scroll que agregue una clase al pasar
+   cierto punto, y CSS normal que reaccione a esa clase. Eso es
+   comportamiento estándar y soportado en todos los navegadores.
+
+   Si no es indispensable, el header sticky simple que quedó arriba ya
+   mantiene la marca visible durante todo el scroll.
+   ========================================================================= */
