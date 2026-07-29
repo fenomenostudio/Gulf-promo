@@ -155,7 +155,22 @@ Razón de diseño: la promo dura hasta el 19 de octubre, y un período largo mos
 demasiado peso visual invita a postergar el registro. La información tiene que estar,
 pero sin competir con el llamado a participar.
 
+El color es **Gulf Dark Grey `#6C6F70`** de la paleta de apoyo. Se eligió ese y no los
+grises más claros por contraste: sobre blanco da 5.07:1, que cumple el mínimo de 4.5:1
+para texto pequeño. Gulf Metallic Grey (`#7E848B`) da 3.78:1 y Medium Grey (`#A5ACAF`)
+2.30:1 — ninguno cumple, y en un texto de 13-14px eso ya es ilegible para bastante gente.
+
 Las reglas van **al final del archivo** a propósito: comparten especificidad con
 `.tally-page-1 .tally-block-text` y con la media query de móvil, así que ganan por
 orden de cascada. Si se agregan reglas nuevas después, hay que dejarlas antes de este
 bloque o subirle la especificidad.
+
+### Flecha del botón de Instagram
+
+Va con el glifo **`\279A`** (HEAVY NORTH EAST ARROW) en lugar de `\2197` (↗), que se
+veía demasiado delgada. Se escribe con el escape CSS y no con el carácter literal, para
+que no dependa de la codificación al pegarlo en Tally.
+
+Se descartó dibujarla con bordes (`border-top` + `border-right` rotados): sin rotación
+queda como una esquina `¬` y con `rotate(45deg)` apunta a la derecha en vez de
+arriba-derecha, perdiendo el sentido de "abre enlace externo".

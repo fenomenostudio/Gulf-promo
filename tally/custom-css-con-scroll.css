@@ -541,10 +541,11 @@ body,
 }
 
 .tally-page-2 a[href*="instagram.com"]::after {
-  content: "↗" !important;
-  margin-left: 9px !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
+  content: "\279A" !important;
+  margin-left: 10px !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
 }
 
 .tally-page-2 a[href*="instagram.com"]:hover {
@@ -817,4 +818,12 @@ body,
     font-size: 13px !important;
     line-height: 1.5 !important;
   }
+}
+
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8 p,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8 strong,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8 b,
+.tally-page-1 .tally-block-0f2906b0-1823-4fe4-b3ac-88d1c71be7f8 div {
+  color: #6C6F70 !important;
 }
