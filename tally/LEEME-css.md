@@ -44,17 +44,22 @@ Verificados leyendo el HTML publicado:
 El PNG del cover es 1920×647 pero el contenido visible ocupa solo de `y=181` a
 `y=482` (302px). Arriba y abajo hay ~28% y ~25% de transparencia.
 
-En escritorio se usa `aspect-ratio: 1920/350` con `object-fit: cover` (recorta el
-vacío transparente, no los logos) más `transform: scale(0.595)`: los logos quedan
-en 180px dentro de una caja de 350px, o sea 170px de margen total.
+**Escritorio:** `aspect-ratio: 1920/270` + `object-fit: contain` + `transform:
+scale(1.111)` → logos de 140px con 130px de margen total.
 
-En móvil el header es `aspect-ratio: 1920/971` (a 390px de ancho, 197px de alto) con
-`transform: scale(1.2)` en la imagen. El scale es necesario porque con `object-fit:
-contain` la imagen queda limitada por el ancho, así que subir el alto de la caja no
+Importante: acá **no** se puede usar `object-fit: cover`. Con una caja de 270px, cover
+recorta la imagen de `y=188` a `y=458`, y los logos van de `y=181` a `y=482`: se
+cortarían arriba y abajo. `contain` escala la imagen completa y el `transform` la
+lleva al tamaño pedido.
+
+**Móvil:** `aspect-ratio: 1920/971` (a 390px de ancho, 197px de alto) +
+`transform: scale(1.549)` → logos de 95px. El scale es necesario porque con
+`contain` la imagen queda limitada por el ancho, así que subir el alto de la caja no
 la hace crecer: sin el scale, el espacio extra queda vacío.
 
-El escalado es seguro: el contenido del PNG ocupa de `x=626` a `x=1294` (626px
-transparentes por lado), y `scale(1.2)` solo recorta 160px por lado.
+Los escalados están verificados contra recorte: el contenido del PNG ocupa de `x=626`
+a `x=1294` (626px transparentes por lado), y el scale más agresivo (1.549) solo
+recorta 340px por lado.
 
 Todos los textos van en Gulf Dark Blue `#002776`, incluido el que la persona
 escribe en los campos. El único texto blanco es el de las tarjetas azules.
