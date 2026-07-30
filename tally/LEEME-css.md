@@ -174,3 +174,25 @@ que no dependa de la codificación al pegarlo en Tally.
 Se descartó dibujarla con bordes (`border-top` + `border-right` rotados): sin rotación
 queda como una esquina `¬` y con `rotate(45deg)` apunta a la derecha en vez de
 arriba-derecha, perdiendo el sentido de "abre enlace externo".
+
+## Validación de los consentimientos (T&C y mayoría de edad)
+
+Un bloque de checkboxes marcado como **Required** en Tally solo exige **al menos una**
+opción. Con dos casillas ("Acepto Términos y Condiciones" y "Soy mayor de 18 años") eso
+dejaba pasar a quien marcara solo una — justo lo que el checkbox de edad busca respaldar.
+
+**Solución aplicada:** `Min choices = 2` en el bloque (verificado en el formulario
+publicado: `hasMinChoices: true, minChoices: 2` en ambas casillas). Es nativo y no
+requiere mantener lógica. Al título se le agregó "(marca ambas para continuar)" porque el
+mensaje de error de Tally es genérico ("se requiere un mínimo de 2").
+
+**Descartado:** resolverlo con lógica condicional. La regla que se había construido usaba
+*"When **all** match: does not contain A **y** does not contain B → ocultar botón"*, que
+solo oculta el botón cuando **ninguna** casilla está marcada; los dos casos parciales se
+escapaban. Con "any" en lugar de "all" habría funcionado, pero `Min choices` ya lo cubre.
+
+⚠️ **Cuidado con el bloque "Recuerda qué":** está marcado `isHidden: true` y solo se
+mostraba por una lógica condicional atada a la casilla de edad. Si se borra esa lógica sin
+desocultar el bloque primero, la información desaparece del formulario. Ese bloque
+contiene una condición material de la promo (el ganador debe asistir presencialmente a la
+entrega el 25 de octubre), así que debe estar **siempre visible**.
