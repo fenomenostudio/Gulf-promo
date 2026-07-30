@@ -191,8 +191,22 @@ mensaje de error de Tally es genérico ("se requiere un mínimo de 2").
 solo oculta el botón cuando **ninguna** casilla está marcada; los dos casos parciales se
 escapaban. Con "any" en lugar de "all" habría funcionado, pero `Min choices` ya lo cubre.
 
-⚠️ **Cuidado con el bloque "Recuerda qué":** está marcado `isHidden: true` y solo se
-mostraba por una lógica condicional atada a la casilla de edad. Si se borra esa lógica sin
-desocultar el bloque primero, la información desaparece del formulario. Ese bloque
-contiene una condición material de la promo (el ganador debe asistir presencialmente a la
-entrega el 25 de octubre), así que debe estar **siempre visible**.
+### El bloque "Recuerda qué" es intencionalmente condicional — NO es un bug
+
+Está marcado `isHidden: true` y se muestra mediante una **lógica condicional activa**
+atada a la casilla "Soy mayor de 18 años". **Esto es deliberado. No lo desactives.**
+
+El razonamiento: ese bloque contiene la condición que puede definir si alguien llega a
+cobrar el premio (el ganador debe asistir presencialmente a la entrega el 25 de octubre,
+y si no puede, se elige otro). Es parte de los T&C, pero la mayoría de la gente acepta
+los términos sin leerlos. Sacándola del documento y mostrándola en el formulario, aparece
+donde la atención es más alta.
+
+Por qué funciona sin dejar a nadie afuera: `Min choices = 2` obliga a marcar ambas
+casillas, así que el bloque se muestra al **100% de quienes envían**, y siempre **antes**
+de pulsar "Participar" — el envío, no la casilla, es el compromiso real. Y al estar
+oculto por defecto, no alarga el formulario para quien apenas está empezando a llenarlo.
+
+⚠️ Consecuencia operativa: si algún día se borra esa lógica condicional, **hay que
+desocultar el bloque primero** (menú del bloque → Hide / ⌘⇧H). Si se borra la lógica con
+el bloque aún oculto, la información desaparece del formulario sin que nadie lo note.
