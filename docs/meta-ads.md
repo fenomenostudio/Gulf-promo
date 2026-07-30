@@ -117,12 +117,23 @@ Tres bloques `HIDDEN_FIELDS` en el formulario: `utm_source`, `utm_campaign`,
 `utm_content`. Tally los llena solo desde los parámetros de la URL.
 
 ```
-https://ganacongulf.com/?utm_source=meta&utm_campaign=gana_con_gulf&utm_content=reel_premio
+https://ganacongulf.com/?utm_source=meta&utm_campaign=nacional
 ```
 
 Primer parámetro con `?`, los siguientes con `&`. Quien entra por el **QR impreso**
 llega al dominio pelado y esas columnas quedan vacías — eso identifica el tráfico
 orgánico/impreso sin necesidad de un QR distinto por canal.
+
+Solo dos parámetros, fijos por campaña (`nacional` o `proximidad`). **`utm_content`
+queda vacío a propósito**: el desglose por anuncio, ubicación y plataforma ya lo da
+Meta nativamente, y etiquetarlo a mano sería trabajo manual para duplicar un dato que
+la cuenta publicitaria entrega sola.
+
+Lo que Meta **no** da, y por eso `utm_source` sí vale: la hoja que recibe Gulf no sabe
+nada de anuncios. Sin ese campo no hay forma de decir cuántas filas vinieron de pauta y
+cuántas del QR impreso. Además Meta reporta con atribución de 7 días clic y la hoja
+cuenta filas — los totales nunca coinciden, y el origen en la propia hoja es lo que
+permite reconciliarlos.
 
 ⚠️ **Trampa de Tally, ya pisada una vez.** Un bloque de texto marcado `isHidden: true`
 (⌘⇧H) **no** es un campo oculto: es un párrafo invisible que no captura nada y no
@@ -142,18 +153,120 @@ curl -s -L https://ganacongulf.com | grep -c HIDDEN_FIELDS   # debe dar 3
 Después de agregarlos hay que **actualizar la integración de Google Sheets** para que
 aparezcan las tres columnas nuevas.
 
-## Pendientes antes de poner dinero
+## Prueba de punta a punta — cerrada
 
-1. **Prueba limpia.** Todos los eventos hasta ahora salieron con el código de test
-   `TEST76491` y no cuentan como tráfico real: el conjunto de datos marca 0 eventos en
-   28 días y la conversión tiene `last_fired_time: null`. Hay que entrar desde un
-   teléfono en navegación normal, con los UTM en la URL, y enviar el formulario.
-   Semáforo verde = el contador deja de ser 0 y la conversión registra su primer
-   disparo.
-2. **Borrar los envíos de prueba** en Tally → Submissions (no solo en Sheets).
-   Ojo: el formulario bloquea teléfonos duplicados, así que hay que borrar el registro
-   viejo antes de volver a probar.
-3. **Decidir sobre coincidencias avanzadas** con el cliente.
-4. **`og:description` sigue vacío** — la vista previa en WhatsApp no muestra
-   descripción.
-5. **No imprimir el QR en volumen** hasta cerrar la prueba de punta a punta.
+30 de julio, 16:06. Registro real desde teléfono, navegación normal, sin código de test:
+
+- Conversión `Registro — Gana con Gulf`: `last_fired_time` pasó de `null` a
+  `2026-07-30T16:06:22`.
+- Eventos recibidos: `Tally.FormPageView` 7 · `PageView` 6 · `Tally.FormSubmitted` 1.
+- Los tres UTM llegaron a la hoja con los valores esperados.
+- Envíos de prueba borrados de Tally y de Sheets.
+
+⚠️ **Lo que esta prueba NO demuestra.** Durante el recorrido se visitó `/terminos`, y
+aun así solo hay **un** `Tally.FormSubmitted` en todo el conjunto de datos. Es decir:
+el botón de regreso de esa página no dispara el evento, así que la regla
+`URL no contiene terminos` **nunca llegó a activarse**.
+
+Está probado que no hay doble conteo. **No** está probado que la regla funcione. Se
+conserva igual, como seguro por si esa página cambia de comportamiento.
+
+## Campañas creadas (ambas en PAUSED)
+
+Presupuesto real: **Q7,000 nacional + Q4,300 proximidad, mensuales** — agosto,
+septiembre y octubre, más el presupuesto de julio sin ejecutar repartido entre esos
+tres meses. Total: **Q28,000 nacional** y **Q17,200 proximidad**.
+
+| Campaña | ID | Objetivo | Presupuesto |
+|---|---|---|---|
+| Gana con Gulf — Nacional \| Registros | `120245723919200088` | OUTCOME_LEADS | CBO Q306/día |
+| Gana con Gulf — Proximidad \| 5 distribuidores | `120245723978660088` | OUTCOME_AWARENESS | ABO, Q43/día por conjunto |
+
+Conjunto nacional `120245723922950088` — "Nacional — Amplio GT 18+":
+
+```json
+{
+  "optimization_goal": "OFFSITE_CONVERSIONS",
+  "billing_event": "IMPRESSIONS",
+  "destination_type": "WEBSITE",
+  "promoted_object": {"custom_conversion_id": "27393149657048443"},
+  "targeting": {
+    "geo_locations": {"countries": ["GT"]},
+    "age_min": 18,
+    "targeting_automation": {"advantage_audience": 0}
+  },
+  "attribution_spec": [
+    {"event_type": "CLICK_THROUGH", "window_days": 7},
+    {"event_type": "VIEW_THROUGH", "window_days": 1}
+  ]
+}
+```
+
+**Por qué `advantage_audience: 0`.** Con Advantage+ Audience activo, Meta trata
+`age_min` como sugerencia y puede servir a menores de 18. La promo exige mayoría de
+edad en sus T&C, así que el piso tiene que ser duro. Cuesta algo de expansión
+algorítmica; se paga con gusto frente a registrar menores que no pueden participar.
+
+**Sin intereses.** Guatemala tiene ~7 millones de adultos en Meta. Filtrar por
+"mecánica" o "aceite de motor" achica el público hasta donde el algoritmo no tiene
+dónde buscar, y excluye a quien cambia su aceite sin haber tocado nunca ese tema en
+Facebook. Con un evento de conversión alimentándolo, el sistema encuentra el patrón.
+
+**Un solo conjunto de anuncios.** Meta necesita ~50 conversiones semanales **por
+conjunto** para salir de la fase de aprendizaje. Partir el presupuesto en varios
+públicos deja a todos por debajo del umbral y optimizando a ciegas.
+
+### Calendario de presupuesto — nacional
+
+| Tramo | Días | Diario | Total |
+|---|---|---|---|
+| 1 ago – 30 sep | 61 | Q306 | Q18,666 |
+| 1 – 19 oct | 19 | **Q491** | Q9,329 |
+
+Octubre sube solo porque el mes vale lo mismo pero dura 19 días. **Es un cambio
+manual el 1 de octubre** — la API no lo programa. Cada edición de presupuesto reinicia
+la fase de aprendizaje, por eso hay uno solo en toda la campaña y cae cuando el
+conjunto ya tiene dos meses de historial.
+
+Con Q306 diarios, salir de aprendizaje admite un CPL de hasta **Q44** (7 registros
+diarios). Con los Q80 que se habían calculado antes de la corrección, el techo era
+Q11.40 — la diferencia entre un plan holgado y una apuesta.
+
+### Proximidad — pendiente
+
+Los 5 conjuntos (uno por distribuidor, Q43/día, objetivo REACH, radio inicial 5 km)
+**no están creados**: faltan las direcciones o coordenadas de los distribuidores.
+
+Es ABO y no CBO a propósito: con presupuesto de campaña, Meta volcaría casi todo en la
+zona más barata y dejaría puntos sin cobertura. Con presupuesto por conjunto, cada
+distribuidor tiene su parte garantizada y su reporte propio.
+
+La campaña **no lleva `start_time`**: arranca cuando se active, que debe ser cuando el
+material impreso ya esté físicamente en las tiendas. Pagar por recordar un QR que
+todavía no existe en el punto de venta no sirve de nada.
+
+### Retargeting — más adelante
+
+Alrededor del día 14, cuando haya público suficiente (~1,000 personas), vale la pena
+un conjunto para quienes visitaron y no completaron: el pixel ya distingue
+`Tally.FormPageView` de `Tally.FormSubmitted`. Suele ser el conjunto más barato.
+
+## Pendientes
+
+1. **Direcciones de los 5 distribuidores** para crear los conjuntos de proximidad.
+2. **Cargar los anuncios** (lo hace el equipo). Formatos 1080×1920 para Reels/Stories
+   y 1080×1350 para feed. **El QR no va en los anuncios digitales** — nadie escanea un
+   código con el mismo teléfono en que lo está viendo. En digital va el enlace con UTM.
+3. **Subir el presupuesto a Q491/día el 1 de octubre.**
+4. **No tocar nada los primeros 7 días** de la campaña nacional: los primeros días el
+   costo por resultado siempre miente.
+5. **No imprimir el QR en volumen** hasta que el material esté aprobado por Gulf.
+
+## Corregido sobre versiones anteriores de este documento
+
+- `og:description` **no** estaba vacío: Tally lo derivaba del primer bloque de texto
+  del formulario. El problema real era otro — arrancaba con 135 caracteres antes de
+  llegar a los premios, y WhatsApp corta cerca de los 100, así que la tarjeta se
+  partía a media enumeración. Ya se reemplazó por una descripción propia y corta.
+- La pantalla manual de Medición de Eventos Agregados **no existe** en este
+  portafolio; está migrado a ranking automático.
