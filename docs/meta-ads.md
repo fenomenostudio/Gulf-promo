@@ -180,7 +180,7 @@ tres meses. Total: **Q28,000 nacional** y **Q17,200 proximidad**.
 | Campaña | ID | Objetivo | Presupuesto |
 |---|---|---|---|
 | Gana con Gulf — Nacional \| Registros | `120245723919200088` | OUTCOME_LEADS | CBO Q306/día |
-| Gana con Gulf — Proximidad \| 5 distribuidores | `120245723978660088` | OUTCOME_AWARENESS | ABO, Q43/día por conjunto |
+| Gana con Gulf — Proximidad \| 5 distribuidores | `120245723978660088` | OUTCOME_AWARENESS | ABO, Q3,440 totales por conjunto |
 
 Conjunto nacional `120245723922950088` — "Nacional — Amplio GT 18+":
 
@@ -232,18 +232,57 @@ Con Q306 diarios, salir de aprendizaje admite un CPL de hasta **Q44** (7 registr
 diarios). Con los Q80 que se habían calculado antes de la corrección, el techo era
 Q11.40 — la diferencia entre un plan holgado y una apuesta.
 
-### Proximidad — pendiente
+### Proximidad — 5 conjuntos creados con ubicación provisional
 
-Los 5 conjuntos (uno por distribuidor, Q43/día, objetivo REACH, radio inicial 5 km)
-**no están creados**: faltan las direcciones o coordenadas de los distribuidores.
+| Conjunto | ID |
+|---|---|
+| Proximidad — Distribuidor 1 ⚠ REEMPLAZAR UBICACIÓN | `120245745859680088` |
+| Proximidad — Distribuidor 2 ⚠ REEMPLAZAR UBICACIÓN | `120245745863700088` |
+| Proximidad — Distribuidor 3 ⚠ REEMPLAZAR UBICACIÓN | `120245745865530088` |
+| Proximidad — Distribuidor 4 ⚠ REEMPLAZAR UBICACIÓN | `120245745868630088` |
+| Proximidad — Distribuidor 5 ⚠ REEMPLAZAR UBICACIÓN | `120245745880000088` |
+
+```json
+{
+  "optimization_goal": "REACH",
+  "billing_event": "IMPRESSIONS",
+  "lifetime_budget": 344000,
+  "start_time": "2026-08-01T00:00:00-0600",
+  "end_time": "2026-10-19T23:59:00-0600",
+  "targeting": {
+    "geo_locations": {"custom_locations": [
+      {"latitude": 14.6349, "longitude": -90.5069, "radius": 5, "distance_unit": "kilometer"}
+    ]},
+    "age_min": 18,
+    "targeting_automation": {"advantage_audience": 0}
+  }
+}
+```
+
+Las coordenadas son el centro de Ciudad de Guatemala, **provisionales**. El ⚠ en el
+nombre está para que un conjunto sin reemplazar no pase inadvertido al activar.
+
+**Presupuesto total (`lifetime_budget`), no diario.** Gulf espera que cada
+distribuidor reciba un monto fijo, y eso es exactamente lo que garantiza un
+presupuesto total: Q3,440 por punto, pase lo que pase. Un presupuesto diario no
+garantiza ningún total — solo un ritmo.
+
+Además resuelve la fecha de inicio incierta: esta campaña arranca cuando el material
+impreso ya esté físicamente en las tiendas, no antes. Con presupuesto total Meta
+reparte el monto entre los días que queden, sin recalcular nada a mano.
+
+⚠️ El límite de esa flexibilidad: si el arranque se corre hasta muy cerca del 19 de
+octubre, Meta tiene que gastar Q3,440 en pocos días y probablemente no lo logre. Con
+tres semanas o más de margen no hay problema.
 
 Es ABO y no CBO a propósito: con presupuesto de campaña, Meta volcaría casi todo en la
-zona más barata y dejaría puntos sin cobertura. Con presupuesto por conjunto, cada
-distribuidor tiene su parte garantizada y su reporte propio.
+zona más barata y dejaría distribuidores sin cobertura.
 
-La campaña **no lleva `start_time`**: arranca cuando se active, que debe ser cuando el
-material impreso ya esté físicamente en las tiendas. Pagar por recordar un QR que
-todavía no existe en el punto de venta no sirve de nada.
+**Al reemplazar la ubicación, no tocar** el objetivo (REACH), el presupuesto total, ni
+`advantage_audience: 0`. Solo la ubicación y, si hace falta, el radio.
+
+Radio inicial 5 km. Si dos distribuidores quedan cerca, bajarlo a 3 km en ambos: con
+radios traslapados se paga dos veces por alcanzar a la misma gente.
 
 ### Retargeting — más adelante
 
@@ -253,7 +292,7 @@ un conjunto para quienes visitaron y no completaron: el pixel ya distingue
 
 ## Pendientes
 
-1. **Direcciones de los 5 distribuidores** para crear los conjuntos de proximidad.
+1. **Reemplazar la ubicación provisional** en los 5 conjuntos de proximidad.
 2. **Cargar los anuncios** (lo hace el equipo). Formatos 1080×1920 para Reels/Stories
    y 1080×1350 para feed. **El QR no va en los anuncios digitales** — nadie escanea un
    código con el mismo teléfono en que lo está viendo. En digital va el enlace con UTM.
