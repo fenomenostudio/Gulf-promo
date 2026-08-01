@@ -179,10 +179,43 @@ tres meses. Total: **Q28,000 nacional** y **Q17,200 proximidad**.
 
 | Campaña | ID | Objetivo | Presupuesto |
 |---|---|---|---|
-| Gana con Gulf — Nacional \| Registros | `120245723919200088` | OUTCOME_LEADS | CBO Q306/día |
+| Gana con Gulf — Nacional \| Registros | `120245753960150088` | OUTCOME_LEADS | CBO **total Q28,000** |
 | Gana con Gulf — Proximidad \| 5 distribuidores | `120245723978660088` | OUTCOME_AWARENESS | ABO, Q3,440 totales por conjunto |
 
-Conjunto nacional `120245723922950088` — "Nacional — Amplio GT 18+":
+⚠️ `120245723919200088` — renombrada **"ZZ NO USAR — Nacional (presupuesto diario,
+reemplazada)"**. Es la primera versión, con presupuesto diario. Borrar cuando el
+anuncio esté duplicado en la nueva.
+
+**Por qué hubo que recrearla.** Meta no permite convertir el tipo de presupuesto de una
+campaña existente:
+
+```
+Budget type change not allowed: Changing from lifetime to daily budget
+or vice versa is not allowed for a campaign.  (subcode 1885630)
+```
+
+El tipo se define al crear y no se puede cambiar. Decisión a tomar **antes** de armar
+la campaña, no después.
+
+### Error #1870194 al publicar
+
+Síntoma: *"Tu audiencia contiene una opción de segmentación por lugar que se ha
+suprimido"*. No aparece en `ads_get_errors` — es validación de publicación, no de
+guardado, así que el conjunto se crea sin quejas y falla recién al publicar.
+
+Causa: al crear los conjuntos no se especificó `location_types` dentro de
+`geo_locations`, y el valor por defecto que aplicó Meta incluye una opción ya retirada.
+
+Arreglo, aplicado a los 6 conjuntos:
+
+```json
+"geo_locations": {"countries": ["GT"], "location_types": ["home", "recent"]}
+```
+
+`home` + `recent` = "personas que viven en o estuvieron recientemente en" — la
+combinación que Meta sigue soportando.
+
+Conjunto nacional `120245753969530088` — "Nacional — Amplio GT 18+":
 
 ```json
 {
@@ -191,7 +224,7 @@ Conjunto nacional `120245723922950088` — "Nacional — Amplio GT 18+":
   "destination_type": "WEBSITE",
   "promoted_object": {"custom_conversion_id": "27393149657048443"},
   "targeting": {
-    "geo_locations": {"countries": ["GT"]},
+    "geo_locations": {"countries": ["GT"], "location_types": ["home", "recent"]},
     "age_min": 18,
     "targeting_automation": {"advantage_audience": 0}
   },
@@ -216,21 +249,27 @@ Facebook. Con un evento de conversión alimentándolo, el sistema encuentra el p
 conjunto** para salir de la fase de aprendizaje. Partir el presupuesto en varios
 públicos deja a todos por debajo del umbral y optimizando a ciegas.
 
-### Calendario de presupuesto — nacional
+### Presupuesto nacional: total, no diario
 
-| Tramo | Días | Diario | Total |
-|---|---|---|---|
-| 1 ago – 30 sep | 61 | Q306 | Q18,666 |
-| 1 – 19 oct | 19 | **Q491** | Q9,329 |
+**Q28,000 de presupuesto total** con fecha de fin el 19 de octubre. Meta reparte el
+monto entre los días que queden.
 
-Octubre sube solo porque el mes vale lo mismo pero dura 19 días. **Es un cambio
-manual el 1 de octubre** — la API no lo programa. Cada edición de presupuesto reinicia
-la fase de aprendizaje, por eso hay uno solo en toda la campaña y cae cuando el
-conjunto ya tiene dos meses de historial.
+Se eligió total sobre diario por dos razones del cliente: garantiza que se gaste
+exactamente lo presupuestado (un presupuesto diario fija ritmo, no monto), y absorbe
+sola cualquier corrimiento de la fecha de arranque.
 
-Con Q306 diarios, salir de aprendizaje admite un CPL de hasta **Q44** (7 registros
-diarios). Con los Q80 que se habían calculado antes de la corrección, el techo era
-Q11.40 — la diferencia entre un plan holgado y una apuesta.
+Efecto secundario bueno: **desaparece el cambio manual del 1 de octubre.** Con
+presupuesto diario había que subir de Q306 a Q491 a mano —porque octubre vale lo mismo
+pero dura 19 días— y esa edición reiniciaba la fase de aprendizaje. Con total, Meta
+acelera sola al acercarse el cierre.
+
+El promedio implícito es **Q350 diarios** sobre 80 días. Salir de la fase de
+aprendizaje (7 registros al día) admite un CPL de hasta **Q50**.
+
+⚠️ Contrapartida honesta: Meta recomienda presupuesto diario para campañas de
+conversión, porque el gasto parejo ayuda a la fase de aprendizaje. Con presupuesto
+total el ritmo diario varía más. Si el gasto se vuelve irregular, se puede suavizar con
+`daily_spend_cap` en el conjunto sin cambiar el tipo de presupuesto.
 
 ### Proximidad — 5 conjuntos creados con ubicación provisional
 
@@ -296,7 +335,7 @@ un conjunto para quienes visitaron y no completaron: el pixel ya distingue
 2. **Cargar los anuncios** (lo hace el equipo). Formatos 1080×1920 para Reels/Stories
    y 1080×1350 para feed. **El QR no va en los anuncios digitales** — nadie escanea un
    código con el mismo teléfono en que lo está viendo. En digital va el enlace con UTM.
-3. **Subir el presupuesto a Q491/día el 1 de octubre.**
+3. **Duplicar el anuncio borrador** a la campaña nueva y borrar la vieja (ZZ NO USAR).
 4. **No tocar nada los primeros 7 días** de la campaña nacional: los primeros días el
    costo por resultado siempre miente.
 5. **No imprimir el QR en volumen** hasta que el material esté aprobado por Gulf.
