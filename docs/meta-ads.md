@@ -329,6 +329,45 @@ Alrededor del día 14, cuando haya público suficiente (~1,000 personas), vale l
 un conjunto para quienes visitaron y no completaron: el pixel ya distingue
 `Tally.FormPageView` de `Tally.FormSubmitted`. Suele ser el conjunto más barato.
 
+## Audiencias personalizadas
+
+| Audiencia | ID | Uso |
+|---|---|---|
+| Ya participaron — Gana con Gulf | `120245814095980088` | **Exclusión** en todos los conjuntos |
+| Visitó y no completó — Gana con Gulf | `120245814096770088` | Inclusión en el conjunto de retargeting |
+
+```json
+// Ya participaron — retención 180 días (15552000 s), cubre toda la promo
+{"inclusions":{"operator":"or","rules":[{
+  "event_sources":[{"type":"pixel","id":"2162722331255733"}],
+  "retention_seconds":15552000,
+  "filter":{"operator":"and","filters":[
+    {"field":"event","operator":"eq","value":"Tally.FormSubmitted"}]},
+  "template":"VISITORS_BY_URL"}]}}
+```
+
+La de retargeting es la misma lógica invertida: todos los visitantes de los últimos 30
+días **menos** quienes ya enviaron.
+
+**Aplicada como `excluded_custom_audiences` en el conjunto nacional el 1 de agosto**,
+el mismo día del arranque. El momento importa: editar la segmentación reinicia la fase
+de aprendizaje, y con horas de vida no había nada que perder. Dos semanas después, esa
+misma edición habría costado volver a aprender desde cero.
+
+Retención de 180 días a propósito: la promo dura 80, así que nadie que se registre sale
+de la exclusión antes de que termine.
+
+⚠️ **No es hermético.** La audiencia se arma con eventos del navegador, así que alguien
+que se registró en Chrome y luego ve el anuncio dentro de la app de Instagram puede no
+coincidir. Las coincidencias avanzadas automáticas —ya activadas— reducen el hueco
+usando el correo y el teléfono en hash. Además la audiencia tarda algunas horas en
+actualizarse, así que siempre habrá unas impresiones de más.
+
+Si el desperdicio resulta alto, la vía hermética es subir la lista de la Google Sheet
+como audiencia de tipo cliente (correo y teléfono, que Meta convierte en hash). Eso
+empareja sobre el dato real, no sobre la cookie. **Requiere que los T&C cubran la
+carga de datos de participantes a Meta** — es decisión del cliente.
+
 ## Pendientes
 
 1. **Reemplazar la ubicación provisional** en los 5 conjuntos de proximidad.
